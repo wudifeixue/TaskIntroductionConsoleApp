@@ -14,9 +14,11 @@ namespace TaskIntroductionConsoleApp
         {
             Stopwatch sw = Stopwatch.StartNew();
 
-            int carId = BookCar();
-            int hotelId = BookHotel();
-            int planeId = BookPlane();
+            Task<int> carTask = Task.Factory.StartNew<int>(BookCar);
+            Task<int> hotelTask = Task.Factory.StartNew<int>(BookHotel);
+            Task<int> planeTask = Task.Factory.StartNew<int>(BookPlane);
+
+            Task.WaitAll(carTask, hotelTask, planeTask);
 
             Console.WriteLine("Finished in {0} seconds.", sw.ElapsedMilliseconds / 1000.0);
         }
