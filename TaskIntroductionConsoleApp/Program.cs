@@ -17,7 +17,6 @@ namespace TaskIntroductionConsoleApp
             // The following also works, just a different way to write it
             // Task<int> tsk = new Task<int>(BookCar);
             // tsk.Start();
-
             Task<int> carTask = Task.Factory.StartNew<int>(BookCar);
             Task<int> hotelTask = Task.Factory.StartNew<int>(BookHotel);
             Task<int> planeTask = Task.Factory.StartNew<int>(BookPlane);
@@ -25,10 +24,9 @@ namespace TaskIntroductionConsoleApp
             // Add a follow up hotel Task after the three task
             Task hotelFollowupTask = hotelTask.ContinueWith(
                 taskPrev => Console.WriteLine("Add view note for booking {0}", taskPrev.Result));
-
-            
+                        
             hotelFollowupTask.Wait();
-
+            
             // Task.WaitAll(carTask, hotelTask, planeTask);
             // Or use this WriteLine they works just fine
             Console.WriteLine("Finished booking carId = {0}, hotelId = {1}, planeId = {2}",
@@ -36,7 +34,8 @@ namespace TaskIntroductionConsoleApp
 
             Console.WriteLine("Finished in {0} seconds.", sw.ElapsedMilliseconds / 1000.0);
         }
-
+        // Debug on current thread
+        // Debug.WriteLine("Current Thread ID: " + Thread.CurrentThread.ManagedThreadId);
         static Random random = new Random();
 
         private static int BookPlane()
